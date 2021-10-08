@@ -36,7 +36,7 @@ RUN add-apt-repository -y ppa:fcwu-tw/apps \
 
 RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
-        lxde gtk2-engines-murrine gnome-themes-standard gtk2-engines-pixbuf gtk2-engines-murrine arc-theme \
+        lxde gtk2-engines-murrine gnome-themes-standard gtk2-engines-pixbuf gtk2-engines-murrine language-pack-fr language-selector-gnome arc-theme \
     && apt autoclean -y \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
@@ -112,7 +112,8 @@ COPY --from=builder /src/web/dist/ /usr/local/lib/web/frontend/
 COPY rootfs /
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/frontend/static/novnc/utils/websockify && \
 	chmod +x /usr/local/lib/web/frontend/static/websockify/run
-
+RUN locale-gen fr_FR.UTF-8
+RUN update-locale LANG=fr_FR.UTF-8
 EXPOSE 80
 WORKDIR /root
 ENV HOME=/home/ubuntu \
